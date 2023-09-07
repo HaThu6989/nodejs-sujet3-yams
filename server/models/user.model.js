@@ -11,7 +11,6 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  // rewards: [{ type: String }],
 });
 
 const UserModel = model("User", userSchema);

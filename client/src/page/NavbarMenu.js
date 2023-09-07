@@ -27,17 +27,10 @@ function NavbarMenu() {
           </Nav.Link>
           <Nav.Link
             className="font-weight-bolder text-white"
-            to="/rewards"
+            to="/patries"
             as={Link}
           >
-            Récompenses
-          </Nav.Link>
-          <Nav.Link
-            className="font-weight-bolder text-white"
-            to="/winner"
-            as={Link}
-          >
-            Gagneurs
+            Pâtiseries gagnées
           </Nav.Link>
         </Nav>
 

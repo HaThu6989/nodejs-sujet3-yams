@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import UserRoute from "./routes/user.routes.js";
+import WinnerRoute from "./routes/winner.routes.js";
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/", UserRoute);
+app.use("/", WinnerRoute);
 
 /**
  * https://www.youtube.com/watch?v=u-o30eBK3xs&ab_channel=ShaunHalverson

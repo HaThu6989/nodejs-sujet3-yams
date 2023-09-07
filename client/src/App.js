@@ -2,16 +2,40 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Dice from "./components/dice/Dice";
 import Home from "./page/Home";
-import Reward from "./components/dice/Reward";
-import { useState } from "react";
-import Winner from "./components/dice/Winner";
+import PatriesWinner from "./components/dice/PatriesWinner";
+import { useContext, useEffect, useState } from "react";
 import LoginPage from "./page/LoginPage";
 import SignupPage from "./page/SignupPage";
+import IsPrivate from "./page/isPrivate";
+import axios from "axios";
+import { AuthContext } from "./context/auth.context";
 
 function App() {
   const [resultData, setResultData] = useState();
-  const [rewardsData, setRewardData] = useState();
-  const [winner, setWinner] = useState();
+  const [winnerPatries, setWinnerPatries] = useState();
+  const [patriesOneTime, setPatriesOneTime] = useState();
+  const { user } = useContext(AuthContext);
+
+  const getNewWinner = () => {
+    const newWinner = {
+      userWinner: user._id,
+      patries: patriesOneTime,
+    };
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/findNewWinner`, newWinner)
+      .then((response) => {
+        console.log("response.data", response.data);
+        // setWinnerPatries(response.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  // if (resultData >= 3) {
+  //   getNewWinner();
+  // }
+  useEffect(() => {
+    getNewWinner();
+  }, [patriesOneTime]);
 
   return (
     <div className="App">
@@ -20,18 +44,23 @@ function App() {
         <Route
           path="/yams"
           element={
-            <Dice
-              resultData={resultData}
-              setResultData={setResultData}
-              winner={winner}
-              setWinner={setWinner}
-              rewardsData={rewardsData}
-              setRewardData={setRewardData}
-            />
+            <IsPrivate>
+              <Dice
+                setResultData={setResultData}
+                patriesOneTime={patriesOneTime}
+                setPatriesOneTime={setPatriesOneTime}
+              />
+            </IsPrivate>
           }
         />
-        <Route path="/rewards" element={<Reward resultData={resultData} />} />
-        <Route path="/winner" element={<Winner resultData={resultData} />} />
+        <Route
+          path="/patriesWinner"
+          element={
+            <IsPrivate>
+              <PatriesWinner resultData={resultData} />
+            </IsPrivate>
+          }
+        />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Routes>

@@ -7,7 +7,7 @@ import DiceImage5 from "../../assets/dice-five-solid.svg";
 import DiceImage6 from "../../assets/dice-six-solid.svg";
 import NavbarMenu from "../../page/NavbarMenu";
 
-let patriesData = [
+let patriesAPI = [
   "Fondant supreme",
   "Cake tout Chocolat",
   "Cake Framboise chocolat",
@@ -19,7 +19,7 @@ let patriesData = [
 ];
 
 function Dice(props) {
-  const { resultData, setResultData, rewardsData, setRewardData } = props;
+  const { setResultData, patriesOneTime, setPatriesOneTime } = props;
 
   const diceImages = [
     DiceImage1,
@@ -35,7 +35,6 @@ function Dice(props) {
   const [dice3, setDice3] = useState(diceImages[2]);
   const [dice4, setDice4] = useState(diceImages[3]);
   const [dice5, setDice5] = useState(diceImages[4]);
-  // const [resultData, setResultData] = useState();
 
   let dicesArray = [dice1, dice2, dice3, dice4, dice5];
 
@@ -100,7 +99,8 @@ function Dice(props) {
   };
 
   let result;
-  let rewards = [];
+  let patries = [];
+
   const rollDice = () => {
     const randomNum1 = Math.floor(Math.random() * 6);
     const randomNum2 = Math.floor(Math.random() * 6);
@@ -116,38 +116,35 @@ function Dice(props) {
   };
 
   const getRandomElementsFromArray = (arr, numElements) => {
-    const shuffledArray = arr.sort(() => Math.random() - 0.5);
-    return shuffledArray.slice(0, numElements);
+    const shuffledArray = arr?.sort(() => Math.random() - 0.5);
+    return shuffledArray?.slice(0, numElements);
   };
 
-  const randomThreePatries = getRandomElementsFromArray(patriesData, 3);
-  const randomFourPatries = getRandomElementsFromArray(patriesData, 4);
-  const randomFivePatries = getRandomElementsFromArray(patriesData, 5);
+  const randomThreePatries = getRandomElementsFromArray(patriesAPI, 3);
+  const randomFourPatries = getRandomElementsFromArray(patriesAPI, 4);
+  const randomFivePatries = getRandomElementsFromArray(patriesAPI, 5);
 
   if (hasThreeSameValues(dicesArray) === true) {
     result = 3;
-    rewards.push(randomThreePatries);
+    patries.push(randomThreePatries);
   } else if (hasFourSameValues(dicesArray) === true) {
     result = 4;
-    rewards.push(randomFourPatries);
+    patries.push(randomFourPatries);
   } else if (hasFiveSameValues(dicesArray) === true) {
     result = 5;
-    rewards.push(randomFivePatries);
+    patries.push(randomFivePatries);
   } else {
     result = 0;
   }
 
   useEffect(() => {
     setResultData(result);
-    setRewardData(rewards[0]);
+    setPatriesOneTime(patries[0]);
   }, [result]);
-
-  console.log("rewardsData", rewardsData);
 
   return (
     <div>
       <NavbarMenu />
-
       <div
         style={{
           display: "flex",
@@ -194,14 +191,14 @@ function Dice(props) {
                   color: "#6dc0a7",
                 }}
               >
-                {rewardsData?.map((elm) => {
+                {patriesOneTime?.map((elm) => {
                   return <li>{elm}</li>;
                 })}
               </ul>
             </div>
           ) : (
             <h3 style={{ fontSize: "25px", color: "#bf764f" }}>
-              Bien tenté, mais tu auras plus de chance la prochaine fois !!!
+              Bien tenté, mais vous aurez plus de chance la prochaine fois !!!
             </h3>
           )}
         </div>

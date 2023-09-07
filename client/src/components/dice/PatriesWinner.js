@@ -1,7 +1,7 @@
 import React from "react";
 import NavbarMenu from "../../page/NavbarMenu";
 
-function Winner(props) {
+function PatriesWinner(props) {
   return (
     <div>
       <NavbarMenu />
@@ -9,4 +9,4 @@ function Winner(props) {
   );
 }
 
-export default Winner;
+export default PatriesWinner;
