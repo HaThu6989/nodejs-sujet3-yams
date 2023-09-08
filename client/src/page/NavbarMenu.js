@@ -27,10 +27,10 @@ function NavbarMenu() {
           </Nav.Link>
           <Nav.Link
             className="font-weight-bolder text-white"
-            to="/patries"
+            to="/patriesWinner"
             as={Link}
           >
-            Pâtiseries gagnées
+            Pâtisseries gagnées
           </Nav.Link>
         </Nav>
 

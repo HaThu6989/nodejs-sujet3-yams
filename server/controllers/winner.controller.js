@@ -3,10 +3,9 @@ import WinnerModel from "../models/winner.model.js";
 export const findNewWinner = (req, res) => {
   const { userWinner, patries } = req.body;
   const newWinner = { userWinner, patries };
-  console.log("newWinner", newWinner);
+
   WinnerModel.create(newWinner)
     .then((response) => {
-      console.log("response", response);
       res.status(201).json(response);
     })
     .catch((err) => {
@@ -19,7 +18,7 @@ export const findNewWinner = (req, res) => {
 
 export const getAllWinners = (req, res) => {
   WinnerModel.find()
-    .populate("user")
+    .populate("userWinner")
     .then((response) => {
       res.json(response);
     })

@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
-import DiceImage1 from "../../assets/dice-one-solid.svg";
-import DiceImage2 from "../../assets/dice-two-solid.svg";
-import DiceImage3 from "../../assets/dice-three-solid.svg";
-import DiceImage4 from "../../assets/dice-four-solid.svg";
-import DiceImage5 from "../../assets/dice-five-solid.svg";
-import DiceImage6 from "../../assets/dice-six-solid.svg";
-import NavbarMenu from "../../page/NavbarMenu";
+import React, { useContext, useEffect, useState } from "react";
+import DiceImage1 from "../assets/dice-one-solid.svg";
+import DiceImage2 from "../assets/dice-two-solid.svg";
+import DiceImage3 from "../assets/dice-three-solid.svg";
+import DiceImage4 from "../assets/dice-four-solid.svg";
+import DiceImage5 from "../assets/dice-five-solid.svg";
+import DiceImage6 from "../assets/dice-six-solid.svg";
+import NavbarMenu from "../page/NavbarMenu";
+import { AuthContext } from "../context/auth.context";
+import axios from "axios";
 
 let patriesAPI = [
   "Fondant supreme",
@@ -20,6 +22,7 @@ let patriesAPI = [
 
 function Dice(props) {
   const { setResultData, patriesOneTime, setPatriesOneTime } = props;
+  const { user } = useContext(AuthContext);
 
   const diceImages = [
     DiceImage1,
@@ -101,6 +104,19 @@ function Dice(props) {
   let result;
   let patries = [];
 
+  const getNewWinner = () => {
+    const newWinner = {
+      userWinner: user?._id,
+      patries: patriesOneTime,
+    };
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/findNewWinner`, newWinner)
+      .then((response) => {
+        console.log("response.data", response.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
   const rollDice = () => {
     const randomNum1 = Math.floor(Math.random() * 6);
     const randomNum2 = Math.floor(Math.random() * 6);
@@ -113,6 +129,8 @@ function Dice(props) {
     setDice3(diceImages[randomNum3]);
     setDice4(diceImages[randomNum4]);
     setDice5(diceImages[randomNum5]);
+
+    if (result >= 3) return getNewWinner();
   };
 
   const getRandomElementsFromArray = (arr, numElements) => {
@@ -168,6 +186,7 @@ function Dice(props) {
         >
           Jouer
         </button>
+
         <div style={{ marginTop: 50, marginBottom: 100 }}>
           {result > 0 ? (
             <div
