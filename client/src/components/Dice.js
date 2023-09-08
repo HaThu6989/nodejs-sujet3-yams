@@ -130,7 +130,7 @@ function Dice(props) {
     setDice4(diceImages[randomNum4]);
     setDice5(diceImages[randomNum5]);
 
-    if (result >= 3) return getNewWinner();
+    if (result >= 1) return getNewWinner();
   };
 
   const getRandomElementsFromArray = (arr, numElements) => {
@@ -138,19 +138,19 @@ function Dice(props) {
     return shuffledArray?.slice(0, numElements);
   };
 
+  const randomOnePatrie = getRandomElementsFromArray(patriesAPI, 1);
+  const randomTwoPatries = getRandomElementsFromArray(patriesAPI, 2);
   const randomThreePatries = getRandomElementsFromArray(patriesAPI, 3);
-  const randomFourPatries = getRandomElementsFromArray(patriesAPI, 4);
-  const randomFivePatries = getRandomElementsFromArray(patriesAPI, 5);
 
   if (hasThreeSameValues(dicesArray) === true) {
+    result = 1;
+    patries.push(randomOnePatrie);
+  } else if (hasFourSameValues(dicesArray) === true) {
+    result = 2;
+    patries.push(randomTwoPatries);
+  } else if (hasFiveSameValues(dicesArray) === true) {
     result = 3;
     patries.push(randomThreePatries);
-  } else if (hasFourSameValues(dicesArray) === true) {
-    result = 4;
-    patries.push(randomFourPatries);
-  } else if (hasFiveSameValues(dicesArray) === true) {
-    result = 5;
-    patries.push(randomFivePatries);
   } else {
     result = 0;
   }
@@ -172,6 +172,13 @@ function Dice(props) {
         }}
       >
         <h1 className="font-title-page ">TENTEZ VOTRE CHANCE !!!</h1>
+        <di>
+          <li>3 pâtisseries gagnées au hasard si 5 dés identiques.</li>
+          <li>
+            2 pâtisseries gagnées au hasard si 4 dés identiques parmi les 5.
+          </li>
+          <li>1 pâtisserie gagnée au hasard si 3 dés identiques parmi les 5</li>
+        </di>
         <div className="container">
           <img className="square" src={dice1}></img>
           <img className="square" src={dice2}></img>
@@ -197,7 +204,7 @@ function Dice(props) {
               }}
             >
               <h3 style={{ color: "#bf764f" }}>
-                Félicitations ! Vous avez gangné {result} patiseries
+                Félicitations ! Vous avez gangné {result} patiserie(s)
               </h3>
               <ul
                 style={{

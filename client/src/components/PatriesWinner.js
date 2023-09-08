@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NavbarMenu from "../page/NavbarMenu";
 import Table from "react-bootstrap/Table";
 
 function PatriesWinner(props) {
-  const { resultData, winnersPatries } = props;
+  const { winnersPatries, getWinnersPatries } = props;
+
+  useEffect(() => {
+    getWinnersPatries();
+  }, [winnersPatries]);
 
   let totalQuantity = 0;
   const filteredWinnersPatries = [];
   for (const item of winnersPatries) {
-    if (totalQuantity + item.patries.length <= 50) {
+    if (totalQuantity + item.patries.length <= 52) {
       filteredWinnersPatries.push(item);
       totalQuantity += item.patries.length;
     } else {
@@ -28,34 +32,36 @@ function PatriesWinner(props) {
           Nombre total de pâtiseries gagnées : {totalQuantity}
         </h4>
 
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Gagant</th>
-              <th>Quantité</th>
-              <th>Pâtiseries</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredWinnersPatries?.map((elm, index) => {
-              return (
-                <tr>
-                  <td>{index + 1}</td>
-                  <td>{elm.userWinner.email}</td>
-                  <td>{elm.patries.length}</td>
-                  <td>
-                    {elm.patries.map((elm) => (
-                      <li style={{ listStyle: "none" }}> {elm} </li>
-                    ))}
-                  </td>
-                  <td>{elm.date}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
+        {totalQuantity >= 50 && (
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Gagant</th>
+                <th>Quantité</th>
+                <th>Pâtiseries</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredWinnersPatries?.map((elm, index) => {
+                return (
+                  <tr>
+                    <td>{index + 1}</td>
+                    <td>{elm.userWinner.email}</td>
+                    <td>{elm.patries.length}</td>
+                    <td>
+                      {elm.patries.map((elm) => (
+                        <li style={{ listStyle: "none" }}> {elm} </li>
+                      ))}
+                    </td>
+                    <td>{elm.date}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        )}
       </div>
     </div>
   );

@@ -14,9 +14,13 @@ function App() {
   const [patriesOneTime, setPatriesOneTime] = useState();
   const [winnersPatries, setWinnersPatries] = useState([]);
 
-  useEffect(() => {
-    getWinnersPatries();
-  }, [patriesOneTime]);
+  // useEffect(() => {
+  //   getWinnersPatries();
+  // }, [patriesOneTime]);
+
+  // useEffect(() => {
+  //   getWinnersPatries();
+  // }, []);
 
   const getWinnersPatries = () => {
     axios
@@ -50,6 +54,7 @@ function App() {
               <PatriesWinner
                 resultData={resultData}
                 winnersPatries={winnersPatries}
+                getWinnersPatries={getWinnersPatries}
               />
             </IsPrivate>
           }
