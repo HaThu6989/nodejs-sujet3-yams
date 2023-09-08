@@ -6,7 +6,7 @@ const winnerSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  patries: [{ type: String }],
+  pastries: [{ type: String }],
   date: {
     type: Date,
     default: Date.now,

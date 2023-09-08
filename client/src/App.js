@@ -2,8 +2,8 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Dice from "./components/Dice";
 import Home from "./page/Home";
-import PatriesWinner from "./components/PatriesWinner";
-import { useEffect, useState } from "react";
+import PastriesWinner from "./components/PastriesWinner";
+import { useState } from "react";
 import LoginPage from "./page/LoginPage";
 import SignupPage from "./page/SignupPage";
 import IsPrivate from "./page/isPrivate";
@@ -11,22 +11,15 @@ import axios from "axios";
 
 function App() {
   const [resultData, setResultData] = useState();
-  const [patriesOneTime, setPatriesOneTime] = useState();
-  const [winnersPatries, setWinnersPatries] = useState([]);
+  const [pastriesOneTime, setPastriesOneTime] = useState();
+  const [winnersPastries, setWinnersPastries] = useState([]);
 
-  // useEffect(() => {
-  //   getWinnersPatries();
-  // }, [patriesOneTime]);
-
-  // useEffect(() => {
-  //   getWinnersPatries();
-  // }, []);
-
-  const getWinnersPatries = () => {
+  console.log("winnersPastries", winnersPastries);
+  const getWinnersPastries = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/winners`)
       .then((response) => {
-        setWinnersPatries(response.data);
+        setWinnersPastries(response.data);
       })
       .catch((error) => console.log(error));
   };
@@ -41,20 +34,20 @@ function App() {
             <IsPrivate>
               <Dice
                 setResultData={setResultData}
-                patriesOneTime={patriesOneTime}
-                setPatriesOneTime={setPatriesOneTime}
+                pastriesOneTime={pastriesOneTime}
+                setPastriesOneTime={setPastriesOneTime}
               />
             </IsPrivate>
           }
         />
         <Route
-          path="/patriesWinner"
+          path="/pastriesWinner"
           element={
             <IsPrivate>
-              <PatriesWinner
+              <PastriesWinner
                 resultData={resultData}
-                winnersPatries={winnersPatries}
-                getWinnersPatries={getWinnersPatries}
+                winnersPastries={winnersPastries}
+                getWinnersPastries={getWinnersPastries}
               />
             </IsPrivate>
           }

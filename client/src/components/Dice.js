@@ -9,7 +9,7 @@ import NavbarMenu from "../page/NavbarMenu";
 import { AuthContext } from "../context/auth.context";
 import axios from "axios";
 
-let patriesAPI = [
+let pastriesAPI = [
   "Fondant supreme",
   "Cake tout Chocolat",
   "Cake Framboise chocolat",
@@ -21,7 +21,7 @@ let patriesAPI = [
 ];
 
 function Dice(props) {
-  const { setResultData, patriesOneTime, setPatriesOneTime } = props;
+  const { setResultData, pastriesOneTime, setPastriesOneTime } = props;
   const { user } = useContext(AuthContext);
 
   const diceImages = [
@@ -102,12 +102,12 @@ function Dice(props) {
   };
 
   let result;
-  let patries = [];
+  let pastries = [];
 
   const getNewWinner = () => {
     const newWinner = {
       userWinner: user?._id,
-      patries: patriesOneTime,
+      pastries: pastriesOneTime,
     };
     axios
       .post(`${process.env.REACT_APP_API_URL}/findNewWinner`, newWinner)
@@ -138,26 +138,26 @@ function Dice(props) {
     return shuffledArray?.slice(0, numElements);
   };
 
-  const randomOnePatrie = getRandomElementsFromArray(patriesAPI, 1);
-  const randomTwoPatries = getRandomElementsFromArray(patriesAPI, 2);
-  const randomThreePatries = getRandomElementsFromArray(patriesAPI, 3);
+  const randomOnePatrie = getRandomElementsFromArray(pastriesAPI, 1);
+  const randomTwoPastries = getRandomElementsFromArray(pastriesAPI, 2);
+  const randomThreePastries = getRandomElementsFromArray(pastriesAPI, 3);
 
   if (hasThreeSameValues(dicesArray) === true) {
     result = 1;
-    patries.push(randomOnePatrie);
+    pastries.push(randomOnePatrie);
   } else if (hasFourSameValues(dicesArray) === true) {
     result = 2;
-    patries.push(randomTwoPatries);
+    pastries.push(randomTwoPastries);
   } else if (hasFiveSameValues(dicesArray) === true) {
     result = 3;
-    patries.push(randomThreePatries);
+    pastries.push(randomThreePastries);
   } else {
     result = 0;
   }
 
   useEffect(() => {
     setResultData(result);
-    setPatriesOneTime(patries[0]);
+    setPastriesOneTime(pastries[0]);
   }, [result]);
 
   return (
@@ -217,7 +217,7 @@ function Dice(props) {
                   color: "#6dc0a7",
                 }}
               >
-                {patriesOneTime?.map((elm) => {
+                {pastriesOneTime?.map((elm) => {
                   return <li>{elm}</li>;
                 })}
               </ul>

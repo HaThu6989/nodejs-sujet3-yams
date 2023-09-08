@@ -2,19 +2,19 @@ import React, { useEffect } from "react";
 import NavbarMenu from "../page/NavbarMenu";
 import Table from "react-bootstrap/Table";
 
-function PatriesWinner(props) {
-  const { winnersPatries, getWinnersPatries } = props;
+function PastriesWinner(props) {
+  const { winnersPastries, getWinnersPastries } = props;
 
   useEffect(() => {
-    getWinnersPatries();
-  }, [winnersPatries]);
+    getWinnersPastries();
+  }, [winnersPastries]);
 
   let totalQuantity = 0;
-  const filteredWinnersPatries = [];
-  for (const item of winnersPatries) {
-    if (totalQuantity + item.patries.length <= 52) {
-      filteredWinnersPatries.push(item);
-      totalQuantity += item.patries.length;
+  const filteredWinnersPastries = [];
+  for (const item of winnersPastries) {
+    if (totalQuantity + item.pastries?.length <= 52) {
+      filteredWinnersPastries.push(item);
+      totalQuantity += item.pastries.length;
     } else {
       break;
     }
@@ -44,14 +44,14 @@ function PatriesWinner(props) {
               </tr>
             </thead>
             <tbody>
-              {filteredWinnersPatries?.map((elm, index) => {
+              {filteredWinnersPastries?.map((elm, index) => {
                 return (
                   <tr>
                     <td>{index + 1}</td>
                     <td>{elm.userWinner.email}</td>
-                    <td>{elm.patries.length}</td>
+                    <td>{elm.pastries.length}</td>
                     <td>
-                      {elm.patries.map((elm) => (
+                      {elm.pastries.map((elm) => (
                         <li style={{ listStyle: "none" }}> {elm} </li>
                       ))}
                     </td>
@@ -67,4 +67,4 @@ function PatriesWinner(props) {
   );
 }
 
-export default PatriesWinner;
+export default PastriesWinner;

@@ -27,7 +27,7 @@ function NavbarMenu() {
           </Nav.Link>
           <Nav.Link
             className="font-weight-bolder text-white"
-            to="/patriesWinner"
+            to="/pastriesWinner"
             as={Link}
           >
             Pâtisseries gagnées

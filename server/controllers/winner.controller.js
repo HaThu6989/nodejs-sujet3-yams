@@ -1,8 +1,8 @@
 import WinnerModel from "../models/winner.model.js";
 
 export const findNewWinner = (req, res) => {
-  const { userWinner, patries } = req.body;
-  const newWinner = { userWinner, patries };
+  const { userWinner, pastries } = req.body;
+  const newWinner = { userWinner, pastries };
 
   WinnerModel.create(newWinner)
     .then((response) => {
